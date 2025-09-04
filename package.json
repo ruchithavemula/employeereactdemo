@@ -1,6 +1,7 @@
 {
   "name": "frontenddemo",
   "private": true,
+  "homepage": "/employeeDemo",
   "version": "0.0.0",
   "type": "module",
   "scripts": {
