@@ -1,0 +1,15 @@
+body {
+  margin: 0;
+  background-color: #242424;
+  font-family: Arial, sans-serif;
+  color: #fff;
+}
+
+input {
+  font-size: 1em;
+}
+
+button:hover {
+  opacity: 0.85;
+  cursor: pointer;
+}
