@@ -10,7 +10,7 @@ function App() {
 
   return (
     <div style={{ maxWidth: 900, margin: "40px auto", fontFamily: "Arial", padding: 20 }}>
-      <h2 style={{ textAlign: "center", color: "#fff" }}>Employee CRUD (React + Spring Boot)</h2>
+      <h2 style={{ textAlign: "center", color: "#fff" }}>Employee CRUD System</h2>
       <EmployeeForm editing={editing} setEditing={setEditing} refresh={triggerReload} />
       <EmployeeList setEditing={setEditing} key={reloadFlag} />
     </div>

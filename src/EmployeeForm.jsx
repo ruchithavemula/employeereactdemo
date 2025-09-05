@@ -33,11 +33,12 @@ export default function EmployeeForm({ editing, setEditing, refresh }) {
         })
         .catch(err => console.error(err));
     } else {
-      fetch("http://localhost:8080/api/employees", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(emp)
-      })
+     fetch("http://localhost:2030/EmployeeSpringBoot/api/employees", {
+  method: "POST",
+  headers: { "Content-Type": "application/json" },
+  body: JSON.stringify(emp)
+})
+
         .then(() => {
           refresh();
         })

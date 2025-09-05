@@ -4,7 +4,7 @@ export default function EmployeeList({ setEditing }) {
   const [employees, setEmployees] = useState([]);
 
   function fetchEmployees() {
-    fetch("http://localhost:8080/api/employees")
+   fetch("http://localhost:2030/EmployeeSpringBoot/api/employees")
       .then(res => res.json())
       .then(data => setEmployees(data))
       .catch(err => console.error(err));
