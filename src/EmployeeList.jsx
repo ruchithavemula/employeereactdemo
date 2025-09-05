@@ -3,17 +3,22 @@ import React, { useEffect, useState } from "react";
 export default function EmployeeList({ setEditing }) {
   const [employees, setEmployees] = useState([]);
 
+  function fetchEmployees() {
+    fetch("http://localhost:8080/api/employees")
+      .then(res => res.json())
+      .then(data => setEmployees(data))
+      .catch(err => console.error(err));
+  }
+
   useEffect(() => {
-    const mockEmployees = [
-      { id: 1, name: "John Doe", email: "john@example.com", salary: 1000 },
-      { id: 2, name: "Jane Smith", email: "jane@example.com", salary: 1200 },
-    ];
-    setEmployees(mockEmployees);
+    fetchEmployees();
   }, []);
 
   function remove(id) {
     if (!window.confirm("Delete this employee?")) return;
-    setEmployees(prev => prev.filter(emp => emp.id !== id));
+    fetch(`http://localhost:8080/api/employees/${id}`, { method: "DELETE" })
+      .then(() => fetchEmployees())
+      .catch(err => console.error(err));
   }
 
   return (

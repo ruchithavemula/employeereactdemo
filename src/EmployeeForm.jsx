@@ -1,19 +1,9 @@
 import React, { useEffect, useState } from "react";
 
-export default function EmployeeForm({ editing, setEditing }) {
+export default function EmployeeForm({ editing, setEditing, refresh }) {
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [salary, setSalary] = useState("");
-  const [employees, setEmployees] = useState([]);
-
-  // Load initial mock data
-  useEffect(() => {
-    const mockEmployees = [
-      { id: 1, name: "John Doe", email: "john@example.com", salary: 1000 },
-      { id: 2, name: "Jane Smith", email: "jane@example.com", salary: 1200 },
-    ];
-    setEmployees(mockEmployees);
-  }, []);
 
   useEffect(() => {
     if (editing) {
@@ -29,24 +19,31 @@ export default function EmployeeForm({ editing, setEditing }) {
 
   function submit(e) {
     e.preventDefault();
+    const emp = { name, email, salary: parseFloat(salary) };
+
     if (editing) {
-      setEmployees(prev =>
-        prev.map(emp =>
-          emp.id === editing.id
-            ? { ...emp, name, email, salary: parseFloat(salary) }
-            : emp
-        )
-      );
-      setEditing(null);
+      fetch(`http://localhost:8080/api/employees/${editing.id}`, {
+        method: "PUT",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(emp)
+      })
+        .then(() => {
+          setEditing(null);
+          refresh();
+        })
+        .catch(err => console.error(err));
     } else {
-      const newEmp = {
-        id: Date.now(),
-        name,
-        email,
-        salary: parseFloat(salary),
-      };
-      setEmployees(prev => [...prev, newEmp]);
+      fetch("http://localhost:8080/api/employees", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(emp)
+      })
+        .then(() => {
+          refresh();
+        })
+        .catch(err => console.error(err));
     }
+
     setName("");
     setEmail("");
     setSalary("");
